@@ -1,5 +1,10 @@
 # improve-skill-coach
 
+### About
+
+This project is about a coaches and clients to improve their skills
+
+
 ### Configs
 
 application.properties
