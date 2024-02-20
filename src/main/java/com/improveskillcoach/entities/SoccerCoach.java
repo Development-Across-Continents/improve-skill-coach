@@ -34,11 +34,13 @@ public class SoccerCoach {
             inverseJoinColumns = @JoinColumn(name = "client_id"))
     private List<Client> clients = new ArrayList<>();
 
-    /*
-    @OneToMany(mappedBy = "soccer_coach")
+    @OneToOne(mappedBy = "coach", cascade = CascadeType.ALL)
+    private Club club;
 
+    @OneToMany(mappedBy = "soccercoach")
     private List<Title> titles = new ArrayList<>();
-*/
+
+
     public SoccerCoach(Long id, String name, LocalDate birthday, String nationalaty){
     this.id=id;
     this.name= name;

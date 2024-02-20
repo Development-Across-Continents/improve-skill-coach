@@ -19,7 +19,7 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String name;
 
     private LocalDate birthday;
@@ -28,7 +28,9 @@ public class Client {
     @ManyToMany(mappedBy = "clients")
     private List<SoccerCoach> coaches = new ArrayList<>();
 
-    public Client(String name, LocalDate birthday){
+    public Client(Long id,String name, LocalDate birthday){
+        this.id=id;
         this.name= name;
+        this.birthday=birthday;
     }
 }
