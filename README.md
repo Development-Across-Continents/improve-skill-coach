@@ -28,3 +28,10 @@ spring.datasource.password=${PASSWORD}
 
 spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
 spring.jpa.hibernate.ddl-auto=none
+```
+
+### Diagram
+
+<div align="center">
+  <img src="https://thumbs2.imgbox.com/d3/9a/gUOJuR76_t.png" />
+</div>
