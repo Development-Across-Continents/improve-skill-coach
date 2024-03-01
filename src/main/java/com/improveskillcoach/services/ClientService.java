@@ -31,6 +31,7 @@ public class ClientService {
         return clients;
     }
 
+    @Transactional
     public Client insert(Client client){
         clientRepository.save(client);
         return client;
