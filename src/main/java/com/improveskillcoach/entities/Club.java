@@ -17,20 +17,20 @@ import java.time.Year;
 public class Club {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String description;
     private String country;
-    private Year foundationYear;
+    private Integer foundationYear;
 
 
     @OneToOne
     @JoinColumn(name = "coach_id")
     private SoccerCoach coach;
 
-    public Club (Long id,String name, String description, String country, Year foundationYear){
+    public Club (Long id,String name, String description, String country, Integer foundationYear){
         this.id=id;
         this.name=name;
         this.description=description;

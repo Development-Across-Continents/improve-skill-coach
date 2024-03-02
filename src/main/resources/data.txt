@@ -1,0 +1,30 @@
+--INSERT INTO tb_titles(name, description, the_year) VALUES ('Taça dos Libertadores', 'Competição entre dos Países da America Latina', 2022);
+
+INSERT INTO tb_soccer_coaches (name, birthday, nationalaty) VALUES
+    ('John Smith', '1990-05-15', 'USA'),
+    ('Maria Garcia', '1985-08-22', 'Spain'),
+    ('David Johnson', '1988-11-30', 'England');
+
+
+INSERT INTO tb_client (name, birthday) VALUES
+    ('Client1', '1995-03-10'),
+    ('Client2', '1992-07-18'),
+    ('Client3', '1998-12-05');
+
+
+INSERT INTO coach_client(coach_id, client_id) VALUES
+    (1, 1),
+    (2, 1),
+    (2, 2),
+    (3, 3);
+
+
+INSERT INTO tb_titles (name, description, the_year, soccer_coach_id) VALUES
+    ('Champion Coach', 'Led the team to victory', 2020, 1),
+    ('Experienced Coach', 'Years of coaching experience', 2018, 2),
+    ('Elite Coach', 'Highly skilled and accomplished', 2022, 3);
+
+INSERT INTO tb_club (name, description, country, foundation_year, coach_id) VALUES
+    ('Club A', 'Elite football club', 'England', 2000, 1),
+    ('Club B', 'Professional football club', 'Spain', 1995, 2),
+    ('Club C', 'Amateur football club', 'USA', 2010, 3);
