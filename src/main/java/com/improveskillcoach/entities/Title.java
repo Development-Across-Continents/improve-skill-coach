@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.Year;
 
 @Getter
@@ -13,7 +14,8 @@ import java.time.Year;
 
 @Entity
 @Table(name= "tb_titles")
-public class Title {
+public class Title implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

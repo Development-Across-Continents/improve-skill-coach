@@ -1,10 +1,12 @@
 package com.improveskillcoach.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,9 @@ import java.util.List;
 
 @Entity
 @Table(name ="tb_soccer_coaches")
-public class SoccerCoach {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class SoccerCoach implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
