@@ -1,4 +1,7 @@
-package com.improveskillcoach.services;
+package com.improveskillcoach.services.exceptions;
 
-public class ResourceNotFoundException extends X {
+public class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String msg) {
+        super(msg);
+    }
 }
