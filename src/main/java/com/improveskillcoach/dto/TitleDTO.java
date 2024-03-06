@@ -13,9 +13,9 @@ public class TitleDTO {
     private String description;
     private Integer theYear;
 
-    private SoccerCoachDTO soccerCoach;
+    private SoccerCoachDTO soccerCoachDto;
 
-    public TitleDTO(Long id, String name, String description, Integer theYear){
+    public TitleDTO(Long id, String name, String description, Integer theYear, SoccerCoachDTO soccerCoachDto){
         this.id= id;
         this.name= name;
         this.description= description;
@@ -27,6 +27,6 @@ public class TitleDTO {
         this.name=entity.getName();
         this.description= entity.getDescription();
         this.theYear= entity.getTheYear();
-        this.soccerCoach= new SoccerCoachDTO(entity.getSoccercoach());
+        this.soccerCoachDto= new SoccerCoachDTO(entity.getSoccercoach());
     }
 }
