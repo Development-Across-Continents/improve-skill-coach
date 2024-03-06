@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Year;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -27,12 +28,24 @@ public class Title {
     private SoccerCoach soccercoach;
 
 
-    public Title(Long id, String name, String description, Integer theYear) {
+    public Title(Long id, String name, String description, Integer theYear, SoccerCoach soccerCoach) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.theYear = theYear;
+        this.soccercoach=soccerCoach;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Title title = (Title) o;
+        return Objects.equals(id, title.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -26,7 +28,7 @@ public class Client {
 
 
     @ManyToMany(mappedBy = "clients")
-    private List<SoccerCoach> coaches = new ArrayList<>();
+    private Set<SoccerCoach> coaches = new HashSet<>();
 
     public Client(Long id,String name, LocalDate birthday){
         this.id=id;
