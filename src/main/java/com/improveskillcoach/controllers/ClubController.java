@@ -1,13 +1,13 @@
 package com.improveskillcoach.controllers;
 
+import com.improveskillcoach.dto.ClubDTO;
 import com.improveskillcoach.entities.Club;
 import com.improveskillcoach.services.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,8 +15,30 @@ import java.util.List;
 @RequestMapping(value = "/club")
 public class ClubController {
 
-@Autowired
-private ClubService service;
+    @Autowired
+    private ClubService clubService;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClubDTO> findById(@PathVariable Long id) {
+        ClubDTO clubDTO = clubService.findById(id);
+        return ResponseEntity.ok(clubDTO);
+    }
+
+
+    @PostMapping
+    public ResponseEntity<ClubDTO> insert(@RequestBody ClubDTO clubDTO) {
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(clubService.insert(clubDTO));
+    }
+
+}
+
+    /*
+    @PutMapping("/{id}")
+public ResponseEntity<ClubDTO> update(@PathVariable Long id, @RequestBody ClubDTO clubDTO){
+    ClubDTO updateClubDTO = clubService.update(id, clubDTO);
+    return ResponseEntity.ok(updateClubDTO);
+    }
+}
 
 @GetMapping
     public ResponseEntity<List<Club>> findAll(){
@@ -24,7 +46,7 @@ private ClubService service;
     return ResponseEntity.ok(list);
     }
 }
-
+*/
 
 //Comentários para serem apagados:
 

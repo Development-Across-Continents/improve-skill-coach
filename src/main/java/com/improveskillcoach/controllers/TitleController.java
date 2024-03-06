@@ -1,8 +1,11 @@
 package com.improveskillcoach.controllers;
 
+import com.improveskillcoach.dto.TitleDTO;
 import com.improveskillcoach.entities.Title;
 import com.improveskillcoach.services.TitleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +22,8 @@ public class TitleController {
     private TitleService service;
 
     @GetMapping
-    public ResponseEntity<List<Title>>findAll() {
-        List<Title> list= service.findAll();
+    public ResponseEntity<Page<TitleDTO>>findAll(Pageable pageable) {
+        Page<TitleDTO> list= service.findAll(pageable);
         return ResponseEntity.ok(list);
     }
 
