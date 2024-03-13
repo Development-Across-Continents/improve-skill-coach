@@ -46,10 +46,10 @@ public class SoccerCoach implements Serializable {
 
 
     public SoccerCoach(Long id, String name, LocalDate birthday, String nationalaty){
-    this.id=id;
-    this.name= name;
-    this.birthday=birthday;
-    this.nationalaty=nationalaty;
+        this.id=id;
+        this.name= name;
+        this.birthday=birthday;
+        this.nationalaty=nationalaty;
     }
 
 
