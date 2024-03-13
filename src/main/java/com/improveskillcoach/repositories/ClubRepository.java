@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClubRepository extends JpaRepository<Club, Long> {
-    Page<ClubDTO> searchByName(String name, Pageable pageable);
+    Page<Club> searchByName(String name, Pageable pageable);
 }
