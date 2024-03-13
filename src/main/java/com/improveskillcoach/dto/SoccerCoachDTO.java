@@ -38,9 +38,10 @@ public class SoccerCoachDTO {
         name= entity.getName();
         birthday=entity.getBirthday();
         nationalaty= entity.getNationalaty();
-        for(Client clt : entity.getClients()){
+       /* for(Client clt : entity.getClients()){
             clients.add(new ClientDTO(clt));
         }
+    */
 
     }
 

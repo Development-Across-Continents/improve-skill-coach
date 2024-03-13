@@ -27,6 +27,6 @@ public class TitleDTO {
         this.name=entity.getName();
         this.description= entity.getDescription();
         this.theYear= entity.getTheYear();
-        this.soccerCoachDto= new SoccerCoachDTO(entity.getSoccercoach());
+       // this.soccerCoachDto= new SoccerCoachDTO(entity.getSoccercoach());
     }
 }
