@@ -1,9 +1,11 @@
 package com.improveskillcoach.controllers;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.improveskillcoach.dto.SoccerCoachDTO;
 import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.services.ClientService;
 import com.improveskillcoach.services.SoccerCoachService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +30,17 @@ public class SoccerCoachController {
     }
 
     @PostMapping
-    public ResponseEntity<SoccerCoach> insert(@RequestBody SoccerCoach soccerCoach){
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(soccerCoachService.insert(soccerCoach));
+    public ResponseEntity<SoccerCoachDTO> insert(@RequestBody @Valid SoccerCoachDTO dto){
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(soccerCoachService.insert(dto));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<SoccerCoach> update(@PathVariable Long id, @RequestBody SoccerCoach soccerCoach){
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(soccerCoachService.update(id, soccerCoach));
+    public ResponseEntity<SoccerCoachDTO> update(@PathVariable Long id, @RequestBody @Valid SoccerCoachDTO dto){
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(soccerCoachService.update(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<SoccerCoach> update(@PathVariable Long id){
+    public ResponseEntity<Void> update(@PathVariable Long id){
         soccerCoachService.delete(id);
         return ResponseEntity.noContent().build();
     }
