@@ -1,9 +1,13 @@
 package com.improveskillcoach.services;
 
+import com.improveskillcoach.dto.ClientDTO;
+import com.improveskillcoach.dto.ClubDTO;
 import com.improveskillcoach.entities.Client;
+import com.improveskillcoach.entities.Club;
 import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.repositories.ClientRepository;
 import com.improveskillcoach.repositories.SoccerCoachRepository;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,39 +36,48 @@ public class ClientService {
     }
 
     @Transactional
-    public Client insert(Client client){
+    public ClientDTO insert(ClientDTO dto){
+        System.out.println(" ClientService - insert | ClientDTO:"+ dto.toString());
+        Client client = new Client();
+        copyDtoToEntity(dto, client);
         clientRepository.save(client);
-        return client;
+        return new ClientDTO(client);
     }
 
     @Transactional
-    public Client update(Long id, Client client){
+    public ClientDTO update(Long id, ClientDTO dto){
 
-        logger.info(" ClientService - update - id:", id, " | ClientService:", client);
+        System.out.println(" ClientService - update - id:"+ id + " | ClientDTO:"+ dto.toString());
 
-        Client client1 = clientRepository.getReferenceById(id);
+        Client entity = clientRepository.getReferenceById(id);
 
-        logger.info(" SoccerCoachService - update - id:", id, " | SoccerCoach:", client1);
+        copyDtoToEntity(dto, entity);
 
-        client1.setName(client.getName());
-        client1.setBirthday(client.getBirthday());
+        System.out.println(" ClientService - update - id:"+ id +" | Entity:"+ entity);
 
-        clientRepository.save(client1);
+        clientRepository.save(entity);
 
         logger.info(" ClientService - update - saved");
 
-        return client1;
+        return new ClientDTO(entity);
     }
 
 
     @Transactional
     public void delete(Long id){
 
-        logger.info(" ClientService - delete - id:", id);
+        logger.info(" ClientService - delete - id:"+ id);
 
         clientRepository.deleteById(id);
 
         logger.info(" ClientService - deleted");
+    }
+
+
+    private void copyDtoToEntity(@NotNull ClientDTO dto, @NotNull Client entity){
+        entity.setName(dto.getName());
+        entity.setDateOfBirth(dto.getDateOfBirth());
+        entity.setCoaches(entity.getCoaches());
     }
 
 

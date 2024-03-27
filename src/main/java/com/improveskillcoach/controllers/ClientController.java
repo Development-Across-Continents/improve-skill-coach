@@ -1,9 +1,11 @@
 package com.improveskillcoach.controllers;
 
+import com.improveskillcoach.dto.ClientDTO;
 import com.improveskillcoach.entities.Client;
 import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.services.ClientService;
 import com.improveskillcoach.services.SoccerCoachService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +35,17 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> insert(@RequestBody Client client){
-        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(clientService.insert(client));
+    public ResponseEntity<ClientDTO> insert(@RequestBody @Valid ClientDTO dto){
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(clientService.insert(dto));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Client> update(@PathVariable Long id, @RequestBody Client client){
-        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(clientService.update(id, client));
+    public ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody @Valid ClientDTO dto){
+        return ResponseEntity.status(HttpStatusCode.valueOf(200)).body(clientService.update(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Client> update(@PathVariable Long id){
+    public ResponseEntity<Void> update(@PathVariable Long id){
         clientService.delete(id);
         return ResponseEntity.noContent().build();
     }

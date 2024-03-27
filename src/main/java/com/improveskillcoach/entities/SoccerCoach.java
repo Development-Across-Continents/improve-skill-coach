@@ -2,6 +2,9 @@ package com.improveskillcoach.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,11 +27,8 @@ public class SoccerCoach implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
-    private LocalDate birthday;
-
+    private LocalDate dateOfBirth;
     private String nationalaty;
 
     @ManyToMany
@@ -45,12 +45,11 @@ public class SoccerCoach implements Serializable {
     private List<Title> titles = new ArrayList<>();
 
 
-    public SoccerCoach(Long id, String name, LocalDate birthday, String nationalaty){
+    public SoccerCoach(Long id, String name, LocalDate dateOfBirth, String nationalaty){
         this.id=id;
         this.name= name;
-        this.birthday=birthday;
+        this.dateOfBirth=dateOfBirth;
         this.nationalaty=nationalaty;
     }
-
 
 }
