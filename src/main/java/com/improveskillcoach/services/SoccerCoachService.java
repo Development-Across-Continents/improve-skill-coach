@@ -51,8 +51,6 @@ public class SoccerCoachService {
 
         copyDtoToEntity(dto, entity);
 
-        logger.info(" SoccerCoachService - update - id:"+ id +" | SoccerCoach:"+ entity);
-
         soccerCoachRepository.save(entity);
 
         System.out.println(" SoccerCoachService - update - saved");
