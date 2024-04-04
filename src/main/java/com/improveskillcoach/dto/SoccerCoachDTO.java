@@ -4,6 +4,7 @@ import com.improveskillcoach.entities.Client;
 import com.improveskillcoach.entities.Club;
 import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.entities.Title;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -22,6 +23,7 @@ public class SoccerCoachDTO {
 
     @Size(min = 3, max = 50, message = "The name needs has in the minimum 3 letters and 50 letters in the maximus")
     @NotNull(message = "The name field is required!")
+    @NotBlank(message = "The field of message must be in the minimum 3 letters")
     private String name;
 
     @Past(message = "The date of birthday must to be in the past")
@@ -29,6 +31,7 @@ public class SoccerCoachDTO {
     private LocalDate dateOfBirth;
 
     @Size(min = 2, max = 30, message = "The nationality needs has in the minimum 2 letters and 30 letters in the maximus")
+    @NotBlank(message = "The field of message must be in the minimum 2 letters")
     private String nationalaty;
 
     private Club club;
