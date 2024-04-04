@@ -1,17 +1,18 @@
 package com.improveskillcoach.services;
 
 import com.improveskillcoach.dto.ClientDTO;
-import com.improveskillcoach.dto.ClubDTO;
 import com.improveskillcoach.entities.Client;
-import com.improveskillcoach.entities.Club;
-import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.repositories.ClientRepository;
 import com.improveskillcoach.repositories.SoccerCoachRepository;
+import com.improveskillcoach.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -49,28 +50,33 @@ public class ClientService {
 
         System.out.println(" ClientService - update - id:"+ id + " | ClientDTO:"+ dto.toString());
 
-        Client entity = clientRepository.getReferenceById(id);
+        try{
+            Client entity = clientRepository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            System.out.println(" ClientService - update - id:"+ id +" | Entity:"+ entity);
+            clientRepository.save(entity);
+            logger.info(" ClientService - update - saved");
 
-        copyDtoToEntity(dto, entity);
-
-        System.out.println(" ClientService - update - id:"+ id +" | Entity:"+ entity);
-
-        clientRepository.save(entity);
-
-        logger.info(" ClientService - update - saved");
-
-        return new ClientDTO(entity);
+            return new ClientDTO(entity);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Resource wasn't found");
+        }
     }
 
 
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id){
 
         logger.info(" ClientService - delete - id:"+ id);
 
-        clientRepository.deleteById(id);
+        Optional<Client> optionalClient = clientRepository.findById(id);
 
-        logger.info(" ClientService - deleted");
+        if(optionalClient.isPresent()){
+                clientRepository.deleteById(id);
+                logger.info(" ClientService - deleted");
+        }else{
+            throw new ResourceNotFoundException("Resource wasn't found");
+        }
     }
 
 

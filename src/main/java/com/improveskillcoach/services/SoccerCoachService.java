@@ -6,6 +6,7 @@ import com.improveskillcoach.dto.SoccerCoachDTO;
 import com.improveskillcoach.entities.Client;
 import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.repositories.SoccerCoachRepository;
+import com.improveskillcoach.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -47,15 +48,16 @@ public class SoccerCoachService {
 
         System.out.println(" SoccerCoachService - update - id:"+ id +" | SoccerCoach:"+ dto.toString());
 
-        SoccerCoach entity = soccerCoachRepository.getReferenceById(id);
+        try{
+            SoccerCoach entity = soccerCoachRepository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            soccerCoachRepository.save(entity);
+            System.out.println(" SoccerCoachService - update - saved");
+            return new SoccerCoachDTO(entity);
 
-        copyDtoToEntity(dto, entity);
-
-        soccerCoachRepository.save(entity);
-
-        System.out.println(" SoccerCoachService - update - saved");
-
-        return new SoccerCoachDTO(entity);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Resource wasn't found");
+        }
     }
 
 
@@ -64,9 +66,14 @@ public class SoccerCoachService {
 
         System.out.println(" SoccerCoachService - delete - id:"+ id);
 
-        soccerCoachRepository.deleteById(id);
+        Optional<SoccerCoach> optionalSoccerCoach = soccerCoachRepository.findById(id);
 
-        logger.info(" SoccerCoachService - deleted");
+        if(optionalSoccerCoach.isPresent()){
+            soccerCoachRepository.deleteById(id);
+            logger.info(" SoccerCoachService - deleted");
+        }else{
+            throw new ResourceNotFoundException("Resource wasn't found");
+        }
     }
 
 

@@ -22,10 +22,12 @@ public class ClientDTO {
 
     @Size(min = 3, max = 50, message = "The name needs has in the minimum 3 letters and 50 letters in the maximus")
     @NotNull(message = "The name field is required!")
+    @NotBlank(message = "The field of message must be in the minimum 3 letters")
     private String name;
 
     @Past(message = "The date of birthday must to be in the past")
     @NotNull(message = "The dateOfBirth field is required!")
+    @NotBlank(message = "The field of message must be in the minimum 3 letters")
     private LocalDate dateOfBirth;
 
     public ClientDTO(Long id, String name, LocalDate dateOfBirth) {
