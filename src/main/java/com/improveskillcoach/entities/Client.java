@@ -28,15 +28,16 @@ public class Client implements Serializable {
     private Long id;
     private String name;
 
-    private LocalDate birthday;
+    private LocalDate dateOfBirth;
 
 
     @ManyToMany(mappedBy = "clients")
     private Set<SoccerCoach> coaches = new HashSet<>();
 
-    public Client(Long id,String name, LocalDate birthday){
+    public Client(Long id,String name, LocalDate dateOfBirth){
         this.id=id;
         this.name= name;
-        this.birthday=birthday;
+        this.dateOfBirth=dateOfBirth;
     }
+
 }
