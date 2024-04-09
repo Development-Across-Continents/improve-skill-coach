@@ -4,6 +4,7 @@ import com.improveskillcoach.dto.ClubDTO;
 import com.improveskillcoach.dto.TitleDTO;
 import com.improveskillcoach.entities.Title;
 import com.improveskillcoach.services.TitleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,12 +38,12 @@ public class TitleController {
     }
 
     @PostMapping
-    public ResponseEntity<TitleDTO> insert(@RequestBody TitleDTO titleDTO){
+    public ResponseEntity<TitleDTO> insert(@Valid @RequestBody TitleDTO titleDTO){
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(service.insert(titleDTO));
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<TitleDTO> update(@PathVariable Long id,@RequestBody TitleDTO titleDTO){
+    public ResponseEntity<TitleDTO> update(@PathVariable Long id,@Valid @RequestBody TitleDTO titleDTO){
         titleDTO= service.update(id,titleDTO);
         return ResponseEntity.ok(titleDTO);
     }
