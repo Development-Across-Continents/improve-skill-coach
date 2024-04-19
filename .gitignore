@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Informações de codigo que não é para subir ###
+info.txt
+
