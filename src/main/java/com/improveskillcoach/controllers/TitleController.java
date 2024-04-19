@@ -38,7 +38,7 @@ public class TitleController {
     }
 
     @PostMapping
-    public ResponseEntity<TitleDTO> insert(@Valid @RequestBody TitleDTO titleDTO){
+    public ResponseEntity<TitleDTO> insert(@RequestBody @Valid TitleDTO titleDTO){
         return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(service.insert(titleDTO));
     }
 

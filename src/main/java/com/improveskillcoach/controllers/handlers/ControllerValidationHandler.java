@@ -33,5 +33,4 @@ public class ControllerValidationHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-
 }

@@ -1,12 +1,14 @@
 package com.improveskillcoach.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.improveskillcoach.entities.Title;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -14,24 +16,24 @@ public class TitleDTO {
 
     private Long id;
 
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
-    @NotBlank(message = "required field")
-    @NonNull // @NotNull
+    @Size(min = 3, max = 50, message = "The name needs has in the minimum 3 letters and 50 letters in the maximus")
+    @NotNull(message = "The name field is required!")
+    @NotBlank(message = "The field of name must be in the minimum 3 letters")
     private String name;
 
-    @Size(min = 3, message = "description must be at least 3 characters long")
-    @NotBlank(message = "required field")
-    @NonNull // @NotNull
+    @Size(min = 3, max = 50, message = " The description needs has in the minimum 3 letters and 50 letters in the maximums")
+    @NotBlank(message = "The field of message must be in the minimum 3 letters")
+    @NotNull(message = "The name field is required!")
     private String description;
 
-    @NotBlank(message = "required field")
-    @NonNull // @NotNull
-    @PastOrPresent
-    private Integer theYear;
+
+    @NotNull(message = "The theYear field is required!")
+    @Pattern(regexp ="^\\d{4}-\\d{2}-\\d{2}$", message = "Formato de ano inválido. Use o padrão yyyy-MM-dd.")
+    private String theYear;
 
     private SoccerCoachDTO soccerCoachDto;
 
-    public TitleDTO(Long id, String name, String description, Integer theYear, SoccerCoachDTO soccerCoachDto){
+    public TitleDTO(Long id, String name, String description, String theYear, SoccerCoachDTO soccerCoachDto){
         this.id= id;
         this.name= name;
         this.description= description;

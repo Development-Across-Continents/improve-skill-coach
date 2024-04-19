@@ -25,14 +25,14 @@ public class Club implements Serializable {
     private String name;
     private String description;
     private String country;
-    private Integer foundationYear;
+    private String foundationYear;
 
 
     @OneToOne
     @JoinColumn(name = "coach_id")
     private SoccerCoach coach;
 
-    public Club (Long id,String name, String description, String country, Integer foundationYear){
+    public Club (Long id,String name, String description, String country, String foundationYear){
         this.id=id;
         this.name=name;
         this.description=description;

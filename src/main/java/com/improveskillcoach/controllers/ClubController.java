@@ -4,6 +4,7 @@ import com.improveskillcoach.dto.ClubDTO;
 import com.improveskillcoach.dto.TitleDTO;
 import com.improveskillcoach.entities.Club;
 import com.improveskillcoach.services.ClubService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,9 +37,9 @@ public class ClubController {
     }
 
 
-    //Falta depois colocar as anotações das Validações e Autorizações dos "Roles Admin" ou "não Admin"
+
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ClubDTO> update(@PathVariable Long id, @RequestBody ClubDTO clubDTO){
+    public ResponseEntity<ClubDTO> update(@PathVariable Long id,@Valid @RequestBody ClubDTO clubDTO){
         clubDTO = clubService.update(id, clubDTO);
         return ResponseEntity.ok(clubDTO);
     }
@@ -47,29 +48,17 @@ public class ClubController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         clubService.delete(id);
         return ResponseEntity.noContent().build();
-}
-
-}
-
-
-
-
-
-/*
-@GetMapping
-    public ResponseEntity<List<Club>> findAll(){
-    List<Club> list = service.findALL();
-    return ResponseEntity.ok(list);
     }
+
+    @PostMapping
+    public ResponseEntity<ClubDTO> insert(@RequestBody @Valid ClubDTO clubDTO){
+        return ResponseEntity.status(HttpStatusCode.valueOf(201)).body(clubService.insert(clubDTO));
+    }
+
+
 }
-*/
 
-//Comentários para serem apagados:
 
-/*Da linha 21 até à linha 24 começo com uma anotação de GetMapping que é um metodo,
- em que através ResponseEntity vamos obter uma lista de clubes.
 
- Essa lista de clubes é obtida como ?
- Através da camada service onde tem as regras de negocio vamos chamar a entidade
- club e esta por sua vez é obtida do banco de dados.*/
+
 
