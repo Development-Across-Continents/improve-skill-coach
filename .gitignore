@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Informations of code that is not to up ###
+info.txt
+

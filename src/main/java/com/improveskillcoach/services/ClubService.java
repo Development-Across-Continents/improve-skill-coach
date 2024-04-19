@@ -46,12 +46,8 @@ public class ClubService {
 
     @Transactional
     public ClubDTO insert(ClubDTO dto){
-        Club club= new Club();
-
-       club.setName(dto.getName());
-       club.setFoundationYear(dto.getFoundationYear());
-       club.setCountry(dto.getCountry());
-       club.setDescription(dto.getDescription());
+        Club club = new Club();
+        copyDtoToEntity(dto, club);
 
        clubRepository.save(club);
        return new ClubDTO(club);

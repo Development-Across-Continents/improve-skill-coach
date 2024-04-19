@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.Objects;
 
@@ -23,14 +25,14 @@ public class Title implements Serializable {
     private Long id;
     private String name;
     private String description;
-    private Integer theYear;
+    private String theYear;
 
     @ManyToOne
     @JoinColumn(name = "soccer_coach_id")
     private SoccerCoach soccercoach;
 
 
-    public Title(Long id, String name, String description, Integer theYear, SoccerCoach soccerCoach) {
+    public Title(Long id, String name, String description, String theYear, SoccerCoach soccerCoach) {
         this.id = id;
         this.name = name;
         this.description = description;
