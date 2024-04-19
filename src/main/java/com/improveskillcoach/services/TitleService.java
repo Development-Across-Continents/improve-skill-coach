@@ -19,7 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.function.ToDoubleBiFunction;
+
+import static org.springframework.jdbc.support.JdbcUtils.isNumeric;
 
 @Service
 public class TitleService {
@@ -49,6 +53,11 @@ public class TitleService {
     public TitleDTO insert(TitleDTO titleDTO){
         Title title= new Title();
         copyDtoToEntity(titleDTO, title);
+
+        verifyDate(titleDTO.getTheYear());
+
+
+
         titleRepository.save(title);
         return new TitleDTO(title); //O controller recebe o retorno do metodo
     }
@@ -84,6 +93,13 @@ public class TitleService {
         entity.setName(titleDTO.getName());
        // entity.setSoccercoach(titleDTO.getSoccerCoachDto());
         entity.setTheYear(titleDTO.getTheYear());
+    }
+
+    private void verifyDate(String date){
+
+        LocalDate localDate = LocalDate.now();
+        LocalDate theYear = LocalDate.parse(date);
+
     }
 }
 
