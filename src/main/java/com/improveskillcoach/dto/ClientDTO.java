@@ -1,10 +1,7 @@
 package com.improveskillcoach.dto;
 
 import com.improveskillcoach.entities.Client;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,12 +22,11 @@ public class ClientDTO {
     @NotBlank(message = "The field of message must be in the minimum 3 letters")
     private String name;
 
-    @Past(message = "The date of birthday must to be in the past")
-    @NotNull(message = "The dateOfBirth field is required!")
-    @NotBlank(message = "The field of message must be in the minimum 3 letters")
-    private LocalDate dateOfBirth;
+    @NotNull(message = "The theYear field is required!")
+    @Pattern(regexp ="^\\d{4}-\\d{2}-\\d{2}$", message = "Formato de ano inválido. Use o padrão yyyy-MM-dd.")
+    private String dateOfBirth;
 
-    public ClientDTO(Long id, String name, LocalDate dateOfBirth) {
+    public ClientDTO(Long id, String name, String dateOfBirth) {
         this.id=id;
         this.name=name;
         this.dateOfBirth=dateOfBirth;
