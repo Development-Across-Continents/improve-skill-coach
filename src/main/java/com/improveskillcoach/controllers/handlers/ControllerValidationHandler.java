@@ -2,6 +2,7 @@ package com.improveskillcoach.controllers.handlers;
 
 import com.improveskillcoach.dto.CustomError;
 import com.improveskillcoach.dto.ValidationError;
+import com.improveskillcoach.services.exceptions.DateTimeParseException;
 import com.improveskillcoach.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -16,13 +17,6 @@ import java.time.Instant;
 @ControllerAdvice
 public class ControllerValidationHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<CustomError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request) {
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(status).body(err);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<CustomError> methodArgumentNotValidation(MethodArgumentNotValidException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
@@ -32,5 +26,4 @@ public class ControllerValidationHandler {
         }
         return ResponseEntity.status(status).body(err);
     }
-
 }
