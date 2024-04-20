@@ -1,11 +1,12 @@
 package com.improveskillcoach.services;
 
 import com.improveskillcoach.dto.TitleDTO;
-import com.improveskillcoach.entities.SoccerCoach;
+
 import com.improveskillcoach.entities.Title;
-import com.improveskillcoach.repositories.SoccerCoachRepository;
 import com.improveskillcoach.repositories.TitleRepository;
+import com.improveskillcoach.services.exceptions.BusinessException;
 import com.improveskillcoach.services.exceptions.DatabaseException;
+import com.improveskillcoach.services.exceptions.DateTimeParseException;
 import com.improveskillcoach.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,13 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.function.ToDoubleBiFunction;
 
-import static org.springframework.jdbc.support.JdbcUtils.isNumeric;
+
 
 @Service
 public class TitleService {
@@ -51,12 +48,12 @@ public class TitleService {
 
     @Transactional //METODO INSERT
     public TitleDTO insert(TitleDTO titleDTO){
+
+        LocalDate theYearLocalDate = parseDate(titleDTO.getTheYear());
+        verifyDate(theYearLocalDate);
+
         Title title= new Title();
         copyDtoToEntity(titleDTO, title);
-
-        verifyDate(titleDTO.getTheYear());
-
-
 
         titleRepository.save(title);
         return new TitleDTO(title); //O controller recebe o retorno do metodo
@@ -64,9 +61,14 @@ public class TitleService {
 
     @Transactional //METODO UPDATE
     public TitleDTO update(Long id,TitleDTO titleDTO){
+
+        LocalDate theYearLocalDate = parseDate(titleDTO.getTheYear());
+        verifyDate(theYearLocalDate);
+
         try{
             Title entity= titleRepository.getReferenceById(id);
             copyDtoToEntity(titleDTO,entity);
+
             entity= titleRepository.save(entity);
             return new TitleDTO(entity);
         }
@@ -95,11 +97,26 @@ public class TitleService {
         entity.setTheYear(titleDTO.getTheYear());
     }
 
-    private void verifyDate(String date){
+
+    private LocalDate parseDate(String date){
+
+        try{
+            LocalDate localDate = LocalDate.now();
+            LocalDate theYear = LocalDate.parse(date);
+            return theYear;
+
+        }catch (java.time.format.DateTimeParseException e){
+            throw new DateTimeParseException("Unacceptable values from date!");
+        }
+    }
+
+    private void verifyDate(LocalDate theYearLocalDate){
 
         LocalDate localDate = LocalDate.now();
-        LocalDate theYear = LocalDate.parse(date);
 
+        if(localDate.isBefore(theYearLocalDate)){ //
+            throw new BusinessException("The date can't be in the future!");
+        }
     }
 }
 
