@@ -52,7 +52,7 @@ public class ClubService {
     public ClubDTO insert(ClubDTO dto){
 
         LocalDate theYearLocalDate = parseDate(dto.getFoundationYear());
-        verifyDate(theYearLocalDate);
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
 
         Club club = new Club();
         copyDtoToEntity(dto, club);
@@ -67,7 +67,7 @@ public class ClubService {
     public ClubDTO update(Long id, ClubDTO clubDTO) {
 
         LocalDate theYearLocalDate = parseDate(clubDTO.getFoundationYear());
-        verifyDate(theYearLocalDate);
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
 
         try{
             Club entity= clubRepository.getReferenceById(id);
@@ -103,7 +103,6 @@ public class ClubService {
     private LocalDate parseDate(String date){
 
         try{
-            LocalDate localDate = LocalDate.now();
             LocalDate theYear = LocalDate.parse(date);
             return theYear;
 
@@ -112,7 +111,7 @@ public class ClubService {
         }
     }
 
-    private void verifyDate(LocalDate theYearLocalDate){
+    private void verifyIfDateIsInThePresentOrPast(LocalDate theYearLocalDate){
 
         LocalDate localDate = LocalDate.now();
 

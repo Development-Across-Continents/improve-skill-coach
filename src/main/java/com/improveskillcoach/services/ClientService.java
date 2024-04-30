@@ -44,7 +44,7 @@ public class ClientService {
         System.out.println(" ClientService - insert | ClientDTO:"+ dto.toString());
 
         LocalDate theYearLocalDate = parseDate(dto.getDateOfBirth());
-        verifyDate(theYearLocalDate);
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
 
         Client client = new Client();
         copyDtoToEntity(dto, client);
@@ -58,7 +58,7 @@ public class ClientService {
         System.out.println(" ClientService - update - id:"+ id + " | ClientDTO:"+ dto.toString());
 
         LocalDate theYearLocalDate = parseDate(dto.getDateOfBirth());
-        verifyDate(theYearLocalDate);
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
 
         try{
             Client entity = clientRepository.getReferenceById(id);
@@ -99,7 +99,6 @@ public class ClientService {
     private LocalDate parseDate(String date){
 
         try{
-            LocalDate localDate = LocalDate.now();
             LocalDate theYear = LocalDate.parse(date);
             return theYear;
 
@@ -108,7 +107,7 @@ public class ClientService {
         }
     }
 
-    private void verifyDate(LocalDate theYearLocalDate){
+    private void verifyIfDateIsInThePresentOrPast(LocalDate theYearLocalDate){
 
         LocalDate localDate = LocalDate.now();
 

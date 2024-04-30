@@ -42,7 +42,7 @@ public class SoccerCoachService {
         System.out.println(" SoccerCoachService - insert | SoccerCoach:"+ dto.toString());
 
         LocalDate theYearLocalDate = parseDate(dto.getDateOfBirth());
-        verifyDate(theYearLocalDate);
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
 
         SoccerCoach entity = new SoccerCoach();
         copyDtoToEntity(dto, entity);
@@ -57,7 +57,7 @@ public class SoccerCoachService {
         System.out.println(" SoccerCoachService - update - id:"+ id +" | SoccerCoach:"+ dto.toString());
 
         LocalDate theYearLocalDate = parseDate(dto.getDateOfBirth());
-        verifyDate(theYearLocalDate);
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
 
         try{
             SoccerCoach entity = soccerCoachRepository.getReferenceById(id);
@@ -98,7 +98,6 @@ public class SoccerCoachService {
     private LocalDate parseDate(String date){
 
         try{
-            LocalDate localDate = LocalDate.now();
             LocalDate theYear = LocalDate.parse(date);
             return theYear;
 
@@ -107,7 +106,7 @@ public class SoccerCoachService {
         }
     }
 
-    private void verifyDate(LocalDate theYearLocalDate){
+    private void verifyIfDateIsInThePresentOrPast(LocalDate theYearLocalDate){
 
         LocalDate localDate = LocalDate.now();
 

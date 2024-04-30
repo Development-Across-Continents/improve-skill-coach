@@ -50,7 +50,7 @@ public class TitleService {
     public TitleDTO insert(TitleDTO titleDTO){
 
         LocalDate theYearLocalDate = parseDate(titleDTO.getTheYear());
-        verifyDate(theYearLocalDate);
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
 
         Title title= new Title();
         copyDtoToEntity(titleDTO, title);
@@ -63,7 +63,7 @@ public class TitleService {
     public TitleDTO update(Long id,TitleDTO titleDTO){
 
         LocalDate theYearLocalDate = parseDate(titleDTO.getTheYear());
-        verifyDate(theYearLocalDate);
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
 
         try{
             Title entity= titleRepository.getReferenceById(id);
@@ -101,7 +101,6 @@ public class TitleService {
     private LocalDate parseDate(String date){
 
         try{
-            LocalDate localDate = LocalDate.now();
             LocalDate theYear = LocalDate.parse(date);
             return theYear;
 
@@ -110,11 +109,11 @@ public class TitleService {
         }
     }
 
-    private void verifyDate(LocalDate theYearLocalDate){
+    private void verifyIfDateIsInThePresentOrPast(LocalDate theYearLocalDate){
 
-        LocalDate localDate = LocalDate.now();
+        LocalDate localNow = LocalDate.now();
 
-        if(localDate.isBefore(theYearLocalDate)){ //
+        if(localNow.isBefore(theYearLocalDate)){
             throw new BusinessException("The date can't be in the future!");
         }
     }
