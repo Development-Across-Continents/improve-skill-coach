@@ -28,7 +28,7 @@ public class SoccerCoach implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
     private String nationalaty;
 
     @ManyToMany
@@ -45,7 +45,7 @@ public class SoccerCoach implements Serializable {
     private List<Title> titles = new ArrayList<>();
 
 
-    public SoccerCoach(Long id, String name, LocalDate dateOfBirth, String nationalaty){
+    public SoccerCoach(Long id, String name, String dateOfBirth, String nationalaty){
         this.id=id;
         this.name= name;
         this.dateOfBirth=dateOfBirth;

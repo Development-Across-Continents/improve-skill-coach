@@ -9,7 +9,9 @@ import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.entities.Title;
 import com.improveskillcoach.repositories.ClubRepository;
 import com.improveskillcoach.repositories.SoccerCoachRepository;
+import com.improveskillcoach.services.exceptions.BusinessException;
 import com.improveskillcoach.services.exceptions.DatabaseException;
+import com.improveskillcoach.services.exceptions.DateTimeParseException;
 import com.improveskillcoach.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +22,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 public class ClubService {
@@ -46,9 +50,12 @@ public class ClubService {
 
     @Transactional
     public ClubDTO insert(ClubDTO dto){
+
+        LocalDate theYearLocalDate = parseDate(dto.getFoundationYear());
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
+
         Club club = new Club();
         copyDtoToEntity(dto, club);
-
        clubRepository.save(club);
        return new ClubDTO(club);
 
@@ -58,6 +65,10 @@ public class ClubService {
 
     @Transactional
     public ClubDTO update(Long id, ClubDTO clubDTO) {
+
+        LocalDate theYearLocalDate = parseDate(clubDTO.getFoundationYear());
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
+
         try{
             Club entity= clubRepository.getReferenceById(id);
             copyDtoToEntity(clubDTO,entity);
@@ -89,6 +100,24 @@ public class ClubService {
         entity.setFoundationYear(dto.getFoundationYear());
     }
 
+    private LocalDate parseDate(String date){
 
+        try{
+            LocalDate theYear = LocalDate.parse(date);
+            return theYear;
+
+        }catch (java.time.format.DateTimeParseException e){
+            throw new DateTimeParseException("Unacceptable values from date!");
+        }
+    }
+
+    private void verifyIfDateIsInThePresentOrPast(LocalDate theYearLocalDate){
+
+        LocalDate localDate = LocalDate.now();
+
+        if(localDate.isBefore(theYearLocalDate)){ //
+            throw new BusinessException("The date can't be in the future!");
+        }
+    }
 }
 

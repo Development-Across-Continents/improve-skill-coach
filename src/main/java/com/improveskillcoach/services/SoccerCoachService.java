@@ -6,6 +6,8 @@ import com.improveskillcoach.dto.SoccerCoachDTO;
 import com.improveskillcoach.entities.Client;
 import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.repositories.SoccerCoachRepository;
+import com.improveskillcoach.services.exceptions.BusinessException;
+import com.improveskillcoach.services.exceptions.DateTimeParseException;
 import com.improveskillcoach.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,8 +40,13 @@ public class SoccerCoachService {
     @Transactional
     public SoccerCoachDTO insert(SoccerCoachDTO dto){
         System.out.println(" SoccerCoachService - insert | SoccerCoach:"+ dto.toString());
+
+        LocalDate theYearLocalDate = parseDate(dto.getDateOfBirth());
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
+
         SoccerCoach entity = new SoccerCoach();
         copyDtoToEntity(dto, entity);
+
         soccerCoachRepository.save(entity);
         return new SoccerCoachDTO(entity);
     }
@@ -48,8 +56,12 @@ public class SoccerCoachService {
 
         System.out.println(" SoccerCoachService - update - id:"+ id +" | SoccerCoach:"+ dto.toString());
 
+        LocalDate theYearLocalDate = parseDate(dto.getDateOfBirth());
+        verifyIfDateIsInThePresentOrPast(theYearLocalDate);
+
         try{
             SoccerCoach entity = soccerCoachRepository.getReferenceById(id);
+
             copyDtoToEntity(dto, entity);
             soccerCoachRepository.save(entity);
             System.out.println(" SoccerCoachService - update - saved");
@@ -83,5 +95,23 @@ public class SoccerCoachService {
         entity.setNationalaty(dto.getNationalaty());
     }
 
+    private LocalDate parseDate(String date){
 
+        try{
+            LocalDate theYear = LocalDate.parse(date);
+            return theYear;
+
+        }catch (java.time.format.DateTimeParseException e){
+            throw new DateTimeParseException("Unacceptable values from date!");
+        }
+    }
+
+    private void verifyIfDateIsInThePresentOrPast(LocalDate theYearLocalDate){
+
+        LocalDate localDate = LocalDate.now();
+
+        if(localDate.isBefore(theYearLocalDate)){ //
+            throw new BusinessException("The date can't be in the future!");
+        }
+    }
 }
