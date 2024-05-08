@@ -50,7 +50,7 @@ public class SoccerCoachService {
 
             SoccerCoach soccerCoach =  soccerCoachMapper.mapJsonToSoccerCoach((SoccerCoach) soccerCoaches.get(i));
 
-            soccerCoachesRelationships.add( new SoccerCoachDTO(soccerCoach, soccerCoach.getClients()));
+            soccerCoachesRelationships.add( new SoccerCoachDTO(soccerCoach, soccerCoach.getClients(), soccerCoach.getTitles()));
         }
 
         return soccerCoachesRelationships;

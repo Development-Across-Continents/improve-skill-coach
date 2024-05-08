@@ -4,6 +4,7 @@ import com.improveskillcoach.entities.Client;
 import com.improveskillcoach.entities.Club;
 import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.entities.Title;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +34,8 @@ public class SoccerCoachDTO {
     private String nationalaty;
 
     private Club club;
-    private Title title;
+
+    private List<TitleDTO> titles = new ArrayList<>();
 
     private List<ClientDTO> clients = new ArrayList<>();
 
@@ -55,7 +57,7 @@ public class SoccerCoachDTO {
         nationalaty= entity.getNationalaty();
     }
 
-    public SoccerCoachDTO(SoccerCoach entity, List<Client> clientList) {
+    public SoccerCoachDTO(SoccerCoach entity, List<Client> clientList, List<Title> titleList) {
         id= entity.getId();
         name= entity.getName();
         dateOfBirth=entity.getDateOfBirth();
@@ -64,6 +66,11 @@ public class SoccerCoachDTO {
         for(Client client : clientList){
             clients.add(new ClientDTO(client));
         }
+
+        for(Title title : titleList){
+            titles.add(new TitleDTO(title));
+        }
+
     }
 
     @Override
@@ -74,7 +81,7 @@ public class SoccerCoachDTO {
                 ", dateOfBirth=" + dateOfBirth +
                 ", nationalaty='" + nationalaty + '\'' +
                 ", club=" + club +
-                ", title=" + title +
+                ", title=" + titles +
                 ", clients=" + clients +
                 '}';
     }
