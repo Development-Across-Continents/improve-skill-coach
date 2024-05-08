@@ -37,6 +37,10 @@ public class SoccerCoachDTO {
 
     private List<ClientDTO> clients = new ArrayList<>();
 
+    public SoccerCoachDTO(){
+
+    }
+
     public SoccerCoachDTO(Long id, String name, String dateOfBirth, String nationalaty) {
         this.id = id;
         this.name = name;
@@ -49,11 +53,17 @@ public class SoccerCoachDTO {
         name= entity.getName();
         dateOfBirth=entity.getDateOfBirth();
         nationalaty= entity.getNationalaty();
-       /* for(Client clt : entity.getClients()){
-            clients.add(new ClientDTO(clt));
-        }
-    */
+    }
 
+    public SoccerCoachDTO(SoccerCoach entity, List<Client> clientList) {
+        id= entity.getId();
+        name= entity.getName();
+        dateOfBirth=entity.getDateOfBirth();
+        nationalaty= entity.getNationalaty();
+
+        for(Client client : clientList){
+            clients.add(new ClientDTO(client));
+        }
     }
 
     @Override

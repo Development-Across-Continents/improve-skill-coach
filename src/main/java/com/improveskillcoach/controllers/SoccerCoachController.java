@@ -23,10 +23,16 @@ public class SoccerCoachController {
 
     @Autowired
     SoccerCoachService soccerCoachService;
-
+    /*
     @GetMapping
     public ResponseEntity<List<SoccerCoach>> findAll(){
         return ResponseEntity.ok(soccerCoachService.getAll());
+    }
+    */
+
+    @GetMapping
+    public ResponseEntity<List<SoccerCoachDTO>> findAllWithRelationship(){
+        return ResponseEntity.ok(soccerCoachService.getAllWithRelationship());
     }
 
     @PostMapping

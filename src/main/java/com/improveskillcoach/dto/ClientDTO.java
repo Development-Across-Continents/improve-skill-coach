@@ -33,9 +33,9 @@ public class ClientDTO {
     }
 
     public ClientDTO(Client entity){
-        id= entity.getId();
-        name= entity.getName();
-        dateOfBirth=entity.getDateOfBirth();
+        this.id= entity.getId();
+        this.name= entity.getName();
+        this.dateOfBirth=entity.getDateOfBirth();
     }
 
     @Override

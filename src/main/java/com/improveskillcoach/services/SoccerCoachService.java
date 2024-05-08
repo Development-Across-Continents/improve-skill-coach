@@ -1,6 +1,7 @@
 package com.improveskillcoach.services;
 
 import com.improveskillcoach.controllers.SoccerCoachController;
+import com.improveskillcoach.controllers.mapper.SoccerCoachMapper;
 import com.improveskillcoach.dto.ClientDTO;
 import com.improveskillcoach.dto.SoccerCoachDTO;
 import com.improveskillcoach.entities.Client;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +32,28 @@ public class SoccerCoachService {
     @Autowired
     SoccerCoachRepository soccerCoachRepository;
 
-    public List<SoccerCoach> getAll(){
+    @Autowired
+    SoccerCoachMapper soccerCoachMapper;
 
+    public List<SoccerCoach> getAll(){
+        List soccerCoaches = soccerCoachRepository.findAll();
+        return soccerCoaches;
+    }
+
+    // Just to practice
+    public List<SoccerCoachDTO> getAllWithRelationship(){
         List soccerCoaches = soccerCoachRepository.findAll();
 
-        return soccerCoaches;
+        List<SoccerCoachDTO> soccerCoachesRelationships = new ArrayList<>();
+
+        for(int i=0; i < soccerCoaches.size(); i++){
+
+            SoccerCoach soccerCoach =  soccerCoachMapper.mapJsonToSoccerCoach((SoccerCoach) soccerCoaches.get(i));
+
+            soccerCoachesRelationships.add( new SoccerCoachDTO(soccerCoach, soccerCoach.getClients()));
+        }
+
+        return soccerCoachesRelationships;
     }
 
     @Transactional
