@@ -33,7 +33,7 @@ public class SoccerCoachDTO {
     @NotNull(message = "The nationalaty field is required!")
     private String nationalaty;
 
-    private Club club;
+    private ClubDTO club;
 
     private List<TitleDTO> titles = new ArrayList<>();
 
@@ -57,7 +57,7 @@ public class SoccerCoachDTO {
         nationalaty= entity.getNationalaty();
     }
 
-    public SoccerCoachDTO(SoccerCoach entity, List<Client> clientList, List<Title> titleList) {
+    public SoccerCoachDTO(SoccerCoach entity, Club club, List<Client> clientList, List<Title> titleList) {
         id= entity.getId();
         name= entity.getName();
         dateOfBirth=entity.getDateOfBirth();
@@ -71,6 +71,7 @@ public class SoccerCoachDTO {
             titles.add(new TitleDTO(title));
         }
 
+        this.club = new ClubDTO(club);
     }
 
     @Override
