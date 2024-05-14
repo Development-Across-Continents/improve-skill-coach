@@ -57,6 +57,22 @@ public class SoccerCoachDTO {
         nationalaty= entity.getNationalaty();
     }
 
+    public SoccerCoachDTO(SoccerCoach entity, List<Client> clientList, List<Title> titleList) {
+        id= entity.getId();
+        name= entity.getName();
+        dateOfBirth=entity.getDateOfBirth();
+        nationalaty= entity.getNationalaty();
+
+        for(Client client : clientList){
+            clients.add(new ClientDTO(client));
+        }
+
+        for(Title title : titleList){
+            titles.add(new TitleDTO(title));
+        }
+
+    }
+
     public SoccerCoachDTO(SoccerCoach entity, Club club, List<Client> clientList, List<Title> titleList) {
         id= entity.getId();
         name= entity.getName();

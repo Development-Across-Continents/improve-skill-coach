@@ -46,12 +46,21 @@ public class SoccerCoachService {
 
         List<SoccerCoachDTO> soccerCoachesRelationships = new ArrayList<>();
 
+
+
         for(int i=0; i < soccerCoaches.size(); i++){
 
             SoccerCoach soccerCoach =  soccerCoachMapper.mapJsonToSoccerCoach((SoccerCoach) soccerCoaches.get(i));
 
-            soccerCoachesRelationships.add( new SoccerCoachDTO(soccerCoach, soccerCoach.getClub() , soccerCoach.getClients(), soccerCoach.getTitles()));
+            if(((SoccerCoach) soccerCoaches.get(i)).getClub()==null){
+                soccerCoachesRelationships.add( new SoccerCoachDTO(soccerCoach, soccerCoach.getClients(), soccerCoach.getTitles()));
+            }else{
+                soccerCoachesRelationships.add( new SoccerCoachDTO(soccerCoach, soccerCoach.getClub() , soccerCoach.getClients(), soccerCoach.getTitles()));
+            }
+
+
         }
+
 
         return soccerCoachesRelationships;
     }
