@@ -32,7 +32,7 @@ public class Client implements Serializable {
 
 
     @ManyToMany(mappedBy = "clients")
-    private Set<SoccerCoach> coaches = new HashSet<>();
+    private List<SoccerCoach> coaches = new ArrayList<>();
 
     public Client(Long id,String name, String dateOfBirth){
         this.id=id;
