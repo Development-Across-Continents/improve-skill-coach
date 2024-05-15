@@ -1,6 +1,5 @@
 package com.improveskillcoach.controllers.mapper;
 
-import com.improveskillcoach.dto.SoccerCoachDTO;
 import com.improveskillcoach.entities.SoccerCoach;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
