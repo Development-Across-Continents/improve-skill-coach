@@ -1,7 +1,10 @@
 package com.improveskillcoach.services;
 
+import com.improveskillcoach.controllers.mapper.ClientMapper;
 import com.improveskillcoach.dto.ClientDTO;
+import com.improveskillcoach.dto.SoccerCoachDTO;
 import com.improveskillcoach.entities.Client;
+import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.repositories.ClientRepository;
 import com.improveskillcoach.repositories.SoccerCoachRepository;
 import com.improveskillcoach.services.exceptions.BusinessException;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,14 +33,22 @@ public class ClientService {
     ClientRepository clientRepository;
 
     @Autowired
-    SoccerCoachRepository soccerCoachRepository;
+    ClientMapper clientMapper;
 
-    @Transactional(readOnly = true)
-    public List<Client> getAll(){
-
+    public List<ClientDTO> getAllWithRelationship(){
         List clients = clientRepository.findAll();
-        logger.info("clientList", clients);
-        return clients;
+
+        List<ClientDTO> clientsRelationships = new ArrayList<>();
+
+        for(int i=0; i < clients.size(); i++){
+
+            Client client =  clientMapper.mapJsonToSClient((Client) clients.get(i));
+
+            clientsRelationships.add(new ClientDTO(client, client.getCoaches()));
+
+        }
+
+        return clientsRelationships;
     }
 
     @Transactional
