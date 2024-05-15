@@ -46,8 +46,6 @@ public class SoccerCoachService {
 
         List<SoccerCoachDTO> soccerCoachesRelationships = new ArrayList<>();
 
-
-
         for(int i=0; i < soccerCoaches.size(); i++){
 
             SoccerCoach soccerCoach =  soccerCoachMapper.mapJsonToSoccerCoach((SoccerCoach) soccerCoaches.get(i));
@@ -58,9 +56,7 @@ public class SoccerCoachService {
                 soccerCoachesRelationships.add( new SoccerCoachDTO(soccerCoach, soccerCoach.getClub() , soccerCoach.getClients(), soccerCoach.getTitles()));
             }
 
-
         }
-
 
         return soccerCoachesRelationships;
     }
