@@ -31,9 +31,9 @@ public class TitleDTO {
     @Pattern(regexp ="^\\d{4}-\\d{2}-\\d{2}$", message = "Formato de ano inválido. Use o padrão yyyy-MM-dd.")
     private String theYear;
 
-    private SoccerCoachDTO soccerCoachDto;
+    private SoccerCoachDTO soccerCoach;
 
-    public TitleDTO(Long id, String name, String description, String theYear, SoccerCoachDTO soccerCoachDto){
+    public TitleDTO(Long id, String name, String description, String theYear){
         this.id= id;
         this.name= name;
         this.description= description;
@@ -45,6 +45,7 @@ public class TitleDTO {
         this.name=entity.getName();
         this.description= entity.getDescription();
         this.theYear= entity.getTheYear();
-       // this.soccerCoachDto= new SoccerCoachDTO(entity.getSoccercoach());
+
+
     }
 }

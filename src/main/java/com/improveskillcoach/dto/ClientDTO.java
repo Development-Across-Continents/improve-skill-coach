@@ -1,12 +1,15 @@
 package com.improveskillcoach.dto;
 
 import com.improveskillcoach.entities.Client;
+import com.improveskillcoach.entities.SoccerCoach;
+import com.improveskillcoach.entities.Title;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Setter
@@ -26,6 +29,8 @@ public class ClientDTO {
     @Pattern(regexp ="^\\d{4}-\\d{2}-\\d{2}$", message = "Formato de ano inválido. Use o padrão yyyy-MM-dd.")
     private String dateOfBirth;
 
+    private List<SoccerCoachDTO> soccerCoachs = new ArrayList<>();
+
     public ClientDTO(Long id, String name, String dateOfBirth) {
         this.id=id;
         this.name=name;
@@ -33,10 +38,21 @@ public class ClientDTO {
     }
 
     public ClientDTO(Client entity){
-        id= entity.getId();
-        name= entity.getName();
-        dateOfBirth=entity.getDateOfBirth();
+        this.id= entity.getId();
+        this.name= entity.getName();
+        this.dateOfBirth=entity.getDateOfBirth();
     }
+
+    public ClientDTO(Client entity, List<SoccerCoach> soccerCoachList){
+        this.id= entity.getId();
+        this.name= entity.getName();
+        this.dateOfBirth=entity.getDateOfBirth();
+
+        for(SoccerCoach soccerCoach : soccerCoachList){
+            soccerCoachs.add(new SoccerCoachDTO(soccerCoach));
+        }
+    }
+
 
     @Override
     public String toString() {

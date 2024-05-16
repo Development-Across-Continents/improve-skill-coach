@@ -4,6 +4,7 @@ import com.improveskillcoach.entities.Client;
 import com.improveskillcoach.entities.Club;
 import com.improveskillcoach.entities.SoccerCoach;
 import com.improveskillcoach.entities.Title;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,10 +33,15 @@ public class SoccerCoachDTO {
     @NotNull(message = "The nationalaty field is required!")
     private String nationalaty;
 
-    private Club club;
-    private Title title;
+    private ClubDTO club;
+
+    private List<TitleDTO> titles = new ArrayList<>();
 
     private List<ClientDTO> clients = new ArrayList<>();
+
+    public SoccerCoachDTO(){
+
+    }
 
     public SoccerCoachDTO(Long id, String name, String dateOfBirth, String nationalaty) {
         this.id = id;
@@ -49,11 +55,39 @@ public class SoccerCoachDTO {
         name= entity.getName();
         dateOfBirth=entity.getDateOfBirth();
         nationalaty= entity.getNationalaty();
-       /* for(Client clt : entity.getClients()){
-            clients.add(new ClientDTO(clt));
-        }
-    */
+    }
 
+    public SoccerCoachDTO(SoccerCoach entity, List<Client> clientList, List<Title> titleList) {
+        id= entity.getId();
+        name= entity.getName();
+        dateOfBirth=entity.getDateOfBirth();
+        nationalaty= entity.getNationalaty();
+
+        for(Client client : clientList){
+            clients.add(new ClientDTO(client));
+        }
+
+        for(Title title : titleList){
+            titles.add(new TitleDTO(title));
+        }
+
+    }
+
+    public SoccerCoachDTO(SoccerCoach entity, Club club, List<Client> clientList, List<Title> titleList) {
+        id= entity.getId();
+        name= entity.getName();
+        dateOfBirth=entity.getDateOfBirth();
+        nationalaty= entity.getNationalaty();
+
+        for(Client client : clientList){
+            clients.add(new ClientDTO(client));
+        }
+
+        for(Title title : titleList){
+            titles.add(new TitleDTO(title));
+        }
+
+        this.club = new ClubDTO(club);
     }
 
     @Override
@@ -64,7 +98,7 @@ public class SoccerCoachDTO {
                 ", dateOfBirth=" + dateOfBirth +
                 ", nationalaty='" + nationalaty + '\'' +
                 ", club=" + club +
-                ", title=" + title +
+                ", title=" + titles +
                 ", clients=" + clients +
                 '}';
     }

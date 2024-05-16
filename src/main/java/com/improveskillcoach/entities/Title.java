@@ -32,12 +32,11 @@ public class Title implements Serializable {
     private SoccerCoach soccercoach;
 
 
-    public Title(Long id, String name, String description, String theYear, SoccerCoach soccerCoach) {
+    public Title(Long id, String name, String description, String theYear) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.theYear = theYear;
-        this.soccercoach=soccerCoach;
     }
 
     @Override
